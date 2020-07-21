@@ -1,38 +1,43 @@
 import React from 'react';
-import propTypes from 'prop-types';
+// import propTypes from 'prop-types';
 
-const foodILike = [
-  {id: 1, name: "김치", rating: 5}, 
-  {id: 2, name: "삼겹살", rating: 4.3}, 
-  {id: 3, name: "소고기", rating: 1.2}, 
-  {id: 4, name: "양고기", rating: 3}, 
-  {id: 5, name: "버블티", rating: 1},
-];
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    console.log('aaa');
+  }
+  state = {
+    count: 0,
+    isLoading: true,
+  };
 
-function Food({ name, rating }) {
-  return (
-  <div>
-    <h3>I like { name }</h3>
-    <p>{ rating }/5.0</p>
-  </div>
-  );
-}
+  add = () => {
+    this.setState(current => ({ count: current.count + 1 }));
+  };
+  
+  minus = () => {
+    this.setState(current => ({ count: current.count - 1 }));
+  };
 
-Food.propTypes = {
-  name: propTypes.string.isRequired,
-  rating: propTypes.number.isRequired,
-}
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({isLoading: false});
+    }, 1000);
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <h1>안녕!!!</h1>
-      { foodILike.map(dish => <Food 
-        key={ dish.id } 
-        name={ dish.name } 
-        rating={ dish.rating }/>) }
-    </div>
-  );
+  render() {
+    const { isLoading } = this.state;
+    return (
+      <div>
+        <h1>the state number { this.state.count }</h1>
+        <div>
+          <button type="button" onClick={ this.add }>더하기</button>
+          <button type="button" onClick={ this.minus }>빼기</button>
+        </div>
+      <div>{ isLoading? "Loading..." : "We are ready" }</div>
+      </div>
+    );
+  };
 }
 
 export default App;

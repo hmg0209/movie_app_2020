@@ -1,43 +1,58 @@
 import React from 'react';
-// import propTypes from 'prop-types';
+import axios from 'axios';
+import Movie from './component/Movie';
+import HeroSlider from './component/HeroSlider';
+import './scss/App.scss';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-    console.log('aaa');
-  }
   state = {
-    count: 0,
     isLoading: true,
+    bestMovies: [],
+    movies: [],
   };
 
-  add = () => {
-    this.setState(current => ({ count: current.count + 1 }));
-  };
-  
-  minus = () => {
-    this.setState(current => ({ count: current.count - 1 }));
+  getBestMovies = async () => {
+    const {
+      data: {
+        data: { movies: bestMovies },
+      },
+    } = await axios.get(
+      'https://yts-proxy.now.sh/list_movies.json?sort_by=rating&limit=3'
+    );
+
+    const {
+      data: {
+        data: { movies },
+      },
+    } = await axios.get(
+      'https://yts-proxy.now.sh/list_movies.json?sort_by=rating&limit=50'
+    );
+
+    this.setState({ bestMovies: bestMovies, movies: movies, isLoading: false });
+
   };
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({isLoading: false});
-    }, 1000);
+    this.getBestMovies();
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, bestMovies, movies } = this.state;
     return (
-      <div>
-        <h1>the state number { this.state.count }</h1>
-        <div>
-          <button type="button" onClick={ this.add }>더하기</button>
-          <button type="button" onClick={ this.minus }>빼기</button>
-        </div>
-      <div>{ isLoading? "Loading..." : "We are ready" }</div>
-      </div>
+      <section className="main">
+        {isLoading ? (
+          <div className="loader">
+            <span className="loader__text">Loading...</span>
+          </div>
+        ) : (
+          <div className="container">
+            <HeroSlider movies={bestMovies} />
+            <Movie movies={movies} isLoading={isLoading} />
+          </div>
+        )}
+      </section>
     );
-  };
+  }
 }
 
 export default App;

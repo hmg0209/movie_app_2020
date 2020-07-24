@@ -1,0 +1,130 @@
+.hero-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.hero {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  opacity: 0;
+  visibility: hidden;
+
+  &:nth-child(1) {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .func {
+    margin-top: 60px;
+  }
+
+  &__bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    &-img {
+      width: 60vw;
+      height: 100%;
+      margin-left: auto;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.7;
+      filter: grayscale(70%);
+      mix-blend-mode: screen;
+
+      &::before,
+      &::after {
+        position: absolute;
+        z-index: 0;
+        mix-blend-mode: unset;
+        content: '';
+      }
+
+      &::before {
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 20vh;
+        background: linear-gradient(
+          180deg,
+          rgba(11, 11, 24, 0) 0%,
+          rgba(11, 11, 24, 0.4) 60%,
+          rgba(11, 11, 24, 1) 100%
+        );
+      }
+
+      &:after {
+        top: 0;
+        left: 0;
+        width: 20vw;
+        height: 100vh;
+        background: linear-gradient(
+          270deg,
+          rgba(11, 11, 24, 0) 0%,
+          rgba(11, 11, 24, 0.4) 60%,
+          rgba(11, 11, 24, 1) 100%
+        );
+      }
+    }
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &__cont {
+    width: 30%;
+    padding-right: 15%;
+  }
+
+  &__poster {
+    max-width: 400px;
+    mix-blend-mode: unset;
+  }
+
+  &__brow {
+    letter-spacing: 0.25em;
+  }
+
+  &__title {
+    margin: 40px 0 20px;
+    font-size: 35px;
+  }
+
+  &__controller {
+    position: absolute;
+    height: 100%;
+    width: 8px;
+    right: 3%;
+  }
+
+  &__pagination {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &-item {
+      width: 8px;
+      height: 8px;
+      background-color: white;
+      border-radius: 50%;
+      cursor: pointer;
+
+      & + & {
+        margin-top: 15px;
+      }
+    }
+  }
+}

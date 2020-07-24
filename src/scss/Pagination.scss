@@ -31,7 +31,7 @@
       font-weight: bold;
     }
 
-    &.is-disable {
+    &:disabled {
       opacity: 0.4;
       cursor: default;
     }

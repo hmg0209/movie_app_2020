@@ -25,8 +25,9 @@ function Pagination({ currentPage, totalPage, paginate }) {
     <div className="pagination">
       <button 
         type="button" 
-        className={`pagination__btn ${currentPage === 1 ? 'is-disable' : ''}`}
-        onClick={() => goPrev()}>
+        className="pagination__btn"
+        onClick={() => goPrev()}
+        disabled={currentPage === 1 ? 'disabled' : ''}>
         prev
       </button>
       {pageNumber.map((pageNum, i) => (
@@ -40,8 +41,9 @@ function Pagination({ currentPage, totalPage, paginate }) {
       ))}
       <button 
         type="button" 
-        className={`pagination__btn ${currentPage === totalPage ? 'is-disable' : ''}`}
-        onClick={() => goNext()}>
+        className="pagination__btn"
+        onClick={() => goNext()}
+        disabled={currentPage === totalPage ? 'disabled' : ''} >
         next
       </button>
     </div>

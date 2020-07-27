@@ -1,57 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import PropType from 'prop-types';
+
+import Dropdown from '../component/Dropdown';
 import Pagination from '../component/Pagination';
 
 import '../scss/Movie.scss';
 
-function Movie({ movies, isLoading }) {
-  const [currentPage, setCurrentPage] = useState(1);
+function Movie({ movies }) { 
   const [postsPerPage] = useState(10);
-
+  const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentMovie = movies.slice(indexOfFirstPost, indexOfLastPost);
   const totalPage = Math.ceil(movies.length / postsPerPage);
-
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  useEffect(() => {
-    function SetGridItemHeight() {
-      let grid = document.getElementsByClassName('movie-list')[0];
-      let rowHeight = parseInt(
-        window.getComputedStyle(grid).getPropertyValue('grid-auto-rows')
-      );
-      let rowGap = parseInt(
-        window.getComputedStyle(grid).getPropertyValue('grid-row-gap')
-      );
 
-      let item = grid.getElementsByClassName('movie');
-      for (let i = 0; i < item.length; ++i) {
-        item[i].style.gridRowEnd = `span ${Math.ceil(
-          item[i].children[0].offsetHeight / (rowHeight + rowGap) + 1
-        )}`;
 
-      }
-    }
-
-    function MoveGridItem(){
-
-    }
-
-    if (!isLoading) {
-      // [Fix]: offsetHeight의 값이 들쑥날쑥. 시점 조정 필요.
-      setTimeout(()=> {
-        SetGridItemHeight();
-      }, 600);
-    }
-  }, [isLoading, currentPage]);
 
   return (
-    <section className="section">
-      <div className="movie-list l-wrap">
-        {currentMovie.map((movie, i) => (
-          <div className="movie" key={i}>
-            <div className="movie__inner">
+    <section className="movie__section section">
+      <div className="l-wrap">
+        <div className="movie__filter">
+          <Dropdown></Dropdown>
+        </div>
+        <div className="movie-list">
+          {currentMovie.map((movie, i) => (
+            <a href="#" className="movie" key={i}>
               <span className="movie__poster">
                 <img
                   className="movie__poster-img"
@@ -62,16 +37,20 @@ function Movie({ movies, isLoading }) {
               <div className="movie__data">
                 <h2 className="movie__title">{movie.title}</h2>
                 <ul className="movie__genres list-box">
-                  {movie.genres.map((genre, i) => (
+                  {movie.genres.slice(0, 4).map((genre, i) => (
                     <li className="list-box__item" key={i}>{`#${genre}`}</li>
                   ))}
                 </ul>
               </div>
-            </div>
-          </div>
-        ))}
+            </a>
+          ))}
+        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          paginate={paginate}
+        />
       </div>
-      <Pagination currentPage={currentPage} totalPage={totalPage} paginate={paginate}/>
     </section>
   );
 }

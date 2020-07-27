@@ -8,36 +8,48 @@ class App extends React.Component {
   state = {
     isLoading: true,
     bestMovies: [],
-    movies: [],
+    ratingMovies: [],
   };
 
-  getBestMovies = async () => {
+  getMovies = async () => {
     const {
       data: {
         data: { movies: bestMovies },
       },
     } = await axios.get(
-      'https://yts-proxy.now.sh/list_movies.json?sort_by=rating&limit=3'
+      'https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=4'
     );
 
     const {
       data: {
-        data: { movies },
+        data: { movies: ratingMovies },
       },
     } = await axios.get(
-      'https://yts-proxy.now.sh/list_movies.json?sort_by=rating&limit=50'
+      'https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=50'
     );
 
-    this.setState({ bestMovies: bestMovies, movies: movies, isLoading: false });
+    const {
+      data: {
+        data: { movies: titleMovies },
+      },
+    } = await axios.get(
+      'https://yts.mx/api/v2/list_movies.json?sort_by=title&limit=50'
+    );
 
+    this.setState({
+      bestMovies: bestMovies,
+      ratingMovies: ratingMovies,
+      titleMovies: titleMovies,
+      isLoading: false,
+    });
   };
 
   componentDidMount() {
-    this.getBestMovies();
+    this.getMovies();
   }
 
   render() {
-    const { isLoading, bestMovies, movies } = this.state;
+    const { isLoading, bestMovies, ratingMovies, titleMovies } = this.state;
     return (
       <section className="main">
         {isLoading ? (
@@ -47,7 +59,7 @@ class App extends React.Component {
         ) : (
           <div className="container">
             <HeroSlider movies={bestMovies} />
-            <Movie movies={movies} isLoading={isLoading} />
+            <Movie movies={ratingMovies} />
           </div>
         )}
       </section>

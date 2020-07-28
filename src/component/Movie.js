@@ -6,10 +6,11 @@ import Pagination from '../component/Pagination';
 
 import '../scss/Movie.scss';
 
-function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
+function Movie({ sortList, isAllLoading }) {
   // 영화 sort 데이터 변경
-  const [movies, setMovies] = useState(ratingMovies);
-  const [sortType, setSorting] = useState('rating');
+  const sortDefalt = 'rating';
+  const [movies, setMovies] = useState(sortList[sortDefalt]);
+  const [sortType, setSorting] = useState(sortDefalt);
   const sort = (type) => setSorting(type);
 
   // pagination
@@ -20,15 +21,17 @@ function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
   const currentMovie = movies.slice(indexOfFirstPost, indexOfLastPost);
   const totalPage = Math.ceil(movies.length / postsPerPage);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
 
   useEffect(()=> {
-    if (sortType === 'rating') setMovies(ratingMovies);
-    if (sortType === 'title') setMovies(titleMovies);
-    if (sortType === 'year') setMovies(yearMovies);
-    if (sortType === 'like') setMovies(likeMovies);
-
-    setCurrentPage(1);
-  }, [sortType, ratingMovies, titleMovies, yearMovies, likeMovies]);
+    if (!isAllLoading) {
+      if (sortType === 'rating') setMovies(sortList.rating);
+      if (sortType === 'title') setMovies(sortList.title);
+      if (sortType === 'year') setMovies(sortList.year);
+      if (sortType === 'like') setMovies(sortList.like);
+      setCurrentPage(1);
+    }
+  }, [sortType, sortList, isAllLoading]);
 
   return (
     <section className="movie__section section">
@@ -37,30 +40,34 @@ function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
           <Dropdown sort={sort}></Dropdown>
         </div>
         <div className="movie-list">
-          {currentMovie.map((movie, i) => (
-            <Link to={{
-              pathname: `/movie/${movie.id}`,
-              data: {
-                movie
-              }
-            }} className="movie" key={i}>
-              <span className="movie__poster">
-                <img
-                  className="movie__poster-img"
-                  src={movie.large_cover_image}
-                  alt={movie.title + ' 포스터'}
-                ></img>
-              </span>
-              <div className="movie__data">
-                <h2 className="movie__title">{movie.title}</h2>
-                <ul className="movie__genres list-box">
-                  {movie.genres.slice(0, 4).map((genre, i) => (
-                    <li className="list-box__item" key={i}>{`#${genre}`}</li>
-                  ))}
-                </ul>
-              </div>
-            </Link>
-          ))}
+          { (  isAllLoading && sortType !== sortDefalt ) ? (
+            <div>로딩중이야....</div>
+          ) : (
+            currentMovie.map((movie, i) => (
+              <Link to={{
+                pathname: `/movie/${movie.id}`,
+                data: {
+                  movie
+                }
+              }} className="movie" key={i}>
+                <span className="movie__poster">
+                  <img
+                    className="movie__poster-img"
+                    src={movie.large_cover_image}
+                    alt={movie.title + ' 포스터'}
+                  ></img>
+                </span>
+                <div className="movie__data">
+                  <h2 className="movie__title">{movie.title}</h2>
+                  <ul className="movie__genres list-box">
+                    {movie.genres.slice(0, 4).map((genre, i) => (
+                      <li className="list-box__item" key={i}>{`#${genre}`}</li>
+                    ))}
+                  </ul>
+                </div>
+              </Link>
+            ))
+          ) }
         </div>
         <Pagination
           currentPage={currentPage}

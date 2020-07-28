@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import PropType from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Dropdown from '../component/Dropdown';
 import Pagination from '../component/Pagination';
 
 import '../scss/Movie.scss';
 
-function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) { 
+function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
+  // 영화 sort 데이터 변경
   const [movies, setMovies] = useState(ratingMovies);
   const [sortType, setSorting] = useState('rating');
   const sort = (type) => setSorting(type);
 
+  // pagination
   const [postsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postsPerPage;
@@ -20,14 +22,13 @@ function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(()=> {
-
     if (sortType === 'rating') setMovies(ratingMovies);
     if (sortType === 'title') setMovies(titleMovies);
     if (sortType === 'year') setMovies(yearMovies);
     if (sortType === 'like') setMovies(likeMovies);
 
     setCurrentPage(1);
-  }, [sortType]);
+  }, [sortType, ratingMovies, titleMovies, yearMovies, likeMovies]);
 
   return (
     <section className="movie__section section">
@@ -37,7 +38,12 @@ function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
         </div>
         <div className="movie-list">
           {currentMovie.map((movie, i) => (
-            <a href="#" className="movie" key={i}>
+            <Link to={{
+              pathname: `/movie/${movie.id}`,
+              data: {
+                movie
+              }
+            }} className="movie" key={i}>
               <span className="movie__poster">
                 <img
                   className="movie__poster-img"
@@ -53,7 +59,7 @@ function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
                   ))}
                 </ul>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
         <Pagination
@@ -65,14 +71,5 @@ function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) {
     </section>
   );
 }
-
-Movie.PropType = {
-  id: PropType.number.isRequired,
-  year: PropType.number.isRequired,
-  title: PropType.string.isRequired,
-  summary: PropType.string.isRequired,
-  poster: PropType.string.isRequired,
-  genres: PropType.array.isRequired,
-};
 
 export default Movie;

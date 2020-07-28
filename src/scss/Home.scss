@@ -1,0 +1,15 @@
+.list-box {
+  display: flex;
+  flex-wrap: wrap;
+  
+  
+  &__item {
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 1px 6px 2px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+  }
+}

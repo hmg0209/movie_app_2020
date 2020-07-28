@@ -23,7 +23,7 @@ function Dropdown({sort}) {
 
   useEffect(() => {
     toggleDropdown();
-  }, [isOpened]);
+  });
 
   return (
     <div className="dropdown">

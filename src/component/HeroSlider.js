@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import '../scss/HeroSlider.scss';
 
 function HeroSlider({ movies }) {
@@ -38,9 +40,17 @@ function HeroSlider({ movies }) {
               </ul>
               <p className="hero__summary">{movie.summary}</p>
               <div className="func">
-                <a href="/" className="btn">
+                <Link
+                  to={{
+                    pathname: `/movie/${movie.id}`,
+                    data: {
+                      movie,
+                    },
+                  }}
+                  className="btn"
+                >
                   더보기
-                </a>
+                </Link>
               </div>
             </div>
             <div className="hero__poster">

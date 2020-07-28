@@ -67,6 +67,7 @@ function Home() {
 
   useEffect(() => {
     getMovies();
+    console.log('aaa');
   }, []);
 
   return (

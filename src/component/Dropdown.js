@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../scss/Dropdown.scss';
 
-function Dropdown() {
+function Dropdown({sort}) {
   const [isOpened, toggelDropdown] = useState(false);
-
-  useEffect(() => {
-    toggleDropdown();
-  }, [isOpened]);
 
   function toggleDropdown() {
     const dropdown = document.querySelector('.dropdown');
@@ -22,7 +18,12 @@ function Dropdown() {
       document.querySelector('.dropdown__selected').innerHTML = e.target.value;
       document.querySelector('.dropdown').classList.remove('is-opened');
       toggelDropdown(!isOpened);
+      sort(e.target.value);
   }
+
+  useEffect(() => {
+    toggleDropdown();
+  }, [isOpened]);
 
   return (
     <div className="dropdown">
@@ -47,6 +48,20 @@ function Dropdown() {
           onClick={(e) => selectOption(e)} 
           className="dropdown__option">
           title
+        </button>
+        <button 
+          type="button"
+          value="year"
+          onClick={(e) => selectOption(e)} 
+          className="dropdown__option">
+          year
+        </button>
+        <button 
+          type="button"
+          value="like"
+          onClick={(e) => selectOption(e)} 
+          className="dropdown__option">
+          like
         </button>
       </div>
     </div>

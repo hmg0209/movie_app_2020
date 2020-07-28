@@ -6,7 +6,11 @@ import Pagination from '../component/Pagination';
 
 import '../scss/Movie.scss';
 
-function Movie({ movies }) { 
+function Movie({ ratingMovies, titleMovies, yearMovies, likeMovies }) { 
+  const [movies, setMovies] = useState(ratingMovies);
+  const [sortType, setSorting] = useState('rating');
+  const sort = (type) => setSorting(type);
+
   const [postsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastPost = currentPage * postsPerPage;
@@ -15,14 +19,21 @@ function Movie({ movies }) {
   const totalPage = Math.ceil(movies.length / postsPerPage);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  useEffect(()=> {
 
+    if (sortType === 'rating') setMovies(ratingMovies);
+    if (sortType === 'title') setMovies(titleMovies);
+    if (sortType === 'year') setMovies(yearMovies);
+    if (sortType === 'like') setMovies(likeMovies);
 
+    setCurrentPage(1);
+  }, [sortType]);
 
   return (
     <section className="movie__section section">
       <div className="l-wrap">
         <div className="movie__filter">
-          <Dropdown></Dropdown>
+          <Dropdown sort={sort}></Dropdown>
         </div>
         <div className="movie-list">
           {currentMovie.map((movie, i) => (

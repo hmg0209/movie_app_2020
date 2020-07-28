@@ -21,6 +21,7 @@ function Pagination({ currentPage, totalPage, paginate }) {
       paginate(currentPage)
     }
   }
+
   return (
     <div className="pagination">
       <button 

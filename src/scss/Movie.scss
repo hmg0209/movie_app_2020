@@ -36,6 +36,7 @@
   &__title {
     overflow: hidden;
     width: 100%;
+    margin: 20px 0 10px;
     color: rgba(255, 255, 255, 0.9);
     font-size: 18px;
     display: -webkit-box;
@@ -44,20 +45,51 @@
     -webkit-box-orient: vertical;
   }
 
-  &__utils {
+  &__detail {
     color: rgba(255, 255, 255, 0.5);
     font-size: 16px;
     display: flex;
     justify-content: space-between;
   }
 
+  &__utils {
+    span[class*="icon"] {
+      margin-left: 16px;
+    }
+  }
+
+  &__year {
+    justify-self: flex-start;
+  }
+
   &__rating {
     color: rgb(226, 204, 79);
+  }
+}
+
+.icon {
+  &--like {
+    &::before {
+      content: '♥';
+    }
+  }
+
+  &--watch {
+    &::before {
+      content: '👁‍🗨';
+    }
+  }
+
+  &--star {
+    position: relative;
+    padding-left: 20px;
 
     &::before {
-      display: inline-block;
+      color: rgb(226, 204, 79);
+      position: absolute;
+      top: -1px;
+      left: 0;
       font-size: 14px;
-      padding-right: 4px;
       content: '★';
     }
   }

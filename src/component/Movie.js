@@ -62,13 +62,15 @@ function Movie({ sortList, isAllLoading }) {
                     alt={movie.title + ' 포스터'}
                   ></img>
                 </span>
-                <div className="movie__data">
+                <div className="movie__cont">
                   <h2 className="movie__title">{movie.title}</h2>
-                  <div className="movie__utils">
+                  <div className="movie__detail">
                     <span className="movie__year">{movie.year}</span>
-                    <span className="movie__like icon--like"></span>
-                    <span className="movie__watch icon--watch"></span>
-                    <span className="movie__rating">{movie.rating}</span>
+                    <div className="movie__utils">
+                      <span className="movie__like icon--like"></span>
+                      <span className="movie__watch icon--watch"></span>
+                      <span className="movie__rating icon--star">{movie.rating}</span>
+                    </div>
                   </div>
                 </div>
               </Link>

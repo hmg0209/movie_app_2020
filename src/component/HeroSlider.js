@@ -32,13 +32,23 @@ function HeroSlider({ movies }) {
           <div className="hero__box l-wrap">
             <div className="hero__cont">
               <span className="hero__brow">BEST MOVIES</span>
-              <h3 className="hero__title">{movie.title}</h3>
-              <ul className="list-box">
+              <div className="hero__detail">
+                <span className="hero__rating icon--star">{movie.rating}</span>
+                <dl className="hero__genre list-box">
+                  <dt className="a11y">genre</dt>
                 {movie.genres.map((genre, i) => (
-                  <li className="list-box__item" key={i}>{`#${genre}`}</li>
+                  <dd className="list-box__item" key={i}>{`${genre}`}</dd>
                 ))}
-              </ul>
-              <p className="hero__summary">{movie.summary}</p>
+                </dl>
+              </div>
+              <h3 className="hero__title">{movie.title}</h3>
+              <p className="hero__summary">{
+                movie.summary.length > 300 ? (
+                  `${movie.summary.substring(0,300)}...`
+                ) : (
+                  movie.summary
+                )
+              }</p>
               <div className="func">
                 <Link
                   to={{
@@ -47,10 +57,14 @@ function HeroSlider({ movies }) {
                       movie,
                     },
                   }}
-                  className="btn"
+                  className="btn btn--em"
                 >
-                  더보기
+                  Go Detail
                 </Link>
+
+                <button type="button" className="btn">
+                  Add List
+                </button>
               </div>
             </div>
             <div className="hero__poster">

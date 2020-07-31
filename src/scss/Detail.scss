@@ -1,40 +1,72 @@
 .detail {
-  .hero-section {
+  &-hero {
     position: relative;
-    margin: 0 auto;
-    padding-top: 100vh;
+    width: 100%;
+    height: 0;
+    margin-bottom: 200px;
+    padding-top: 60vh;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 
-    &::before,
-    &::after {
+    &::before {
       position: absolute;
       z-index: 0;
-      mix-blend-mode: unset;
-      content: '';
-    }
-
-    &::before {
-      top: 0;
-      right: 0;
-      width: 10vw;
-      height: 100%;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 80%;
       background: linear-gradient(
-        90deg,
+        180deg,
         rgba(11, 11, 24, 0) 0%,
         rgba(11, 11, 24, 0.4) 60%,
         rgba(11, 11, 24, 1) 100%
       );
+      mix-blend-mode: unset;
+      content: '';
     }
+  }
 
-    &::after {
-      top: 0;
-      left: 0;
-      width: 10vw;
-      height: 100%;
+  &__cont {
+    position: absolute;
+    left: 50%;
+    bottom: -200px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translateX( -50% );
+  }
+
+  &__poster {
+    padding-right: 5%;
+    width: 30%;
+    max-width: 230px;
+    font-size: 0;
+  }
+
+  &__data {
+    width: 50%;
+    max-width: 550px;
+  }
+
+  &__title {
+    font-size: 29px;
+  }
+
+  &__description-box {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      z-index: 0;
+      mix-blend-mode: unset;
+      content: '';
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 30%;
       background: linear-gradient(
-        270deg,
+        180deg,
         rgba(11, 11, 24, 0) 0%,
         rgba(11, 11, 24, 0.4) 60%,
         rgba(11, 11, 24, 1) 100%
@@ -42,10 +74,39 @@
     }
   }
 
-  &__cont {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+  &__description {
+    overflow-y: scroll;
+    max-height: 150px;
+    margin: 0;
+  }
+
+  &-content {
     display: flex;
+    padding-top: 120px;
+  }
+
+  &-comment {
+    width:65%;
+
+    &__ta {
+      margin-bottom: 52px;
+    }
+  }
+
+  &-recommend {
+    box-sizing: border-box;
+    padding-left: 40px;
+    width: 35%;
+  }
+}
+
+.recommend-aside {
+  height: 100px;
+  padding: 20px 28px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+
+  &__h {
+    margin-top: 0;
   }
 }

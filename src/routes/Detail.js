@@ -1,4 +1,8 @@
 import React from 'react';
+
+import Ta from '../component/Ta';
+import CommentList from '../component/CommentList';
+
 import '../scss/Detail.scss';
 
 function Detail(props) {
@@ -14,33 +18,49 @@ function Detail(props) {
 
     return (
       <div className="detail">
-        <div className="l-wrap">
-          <section
-            className="hero-section section"
-            style={{ backgroundImage: `url(${movie.background_image})` }}
-          >
-            <div className="detail__cont">
-              <span className="detail__poster">
-                <img
-                  src={movie.medium_cover_image}
-                  alt={`${movie.title} poster`}
-                ></img>
-              </span>
-              <div className="detail__data">
-                <h1 className="detail__title">{movie.title}</h1>
-                <span className="icon--star">{movie.rating}</span>
-                <dl className="list-box">
-                  <dt className="a11y">genre</dt>
+        <section
+          className="detail-hero"
+          style={{ backgroundImage: `url(${movie.background_image})` }}
+        >
+          <div className="detail__cont l-wrap">
+            <span className="detail__poster">
+              <img
+                src={movie.medium_cover_image}
+                alt={`${movie.title} poster`}
+              ></img>
+            </span>
+            <div className="detail__data">
+              <h1 className="detail__title">{movie.title}</h1>
+              <dl className="list-box">
+                <dt className="a11y">genre</dt>
                 {movie.genres.map((genre, i) => (
                   <dd className="list-box__item" key={i}>{`${genre}`}</dd>
                 ))}
-                </dl>
-                <span>{ movie.year }</span>
-                <span>{ movie.runtime }</span>
-                <p>{ movie.description_full }</p>
+              </dl>
+              <span className="icon--star">{movie.rating}</span>
+              <span>{movie.year}</span>
+              <span>{movie.runtime}</span>
+              <div className="detail__description-box">
+                <p className="detail__description">{movie.description_full}</p>
               </div>
             </div>
+          </div>
+        </section>
+        <div className="detail-content l-wrap"> 
+          <section className="detail-comment">
+            <div className="detail-comment__ta">
+              <Ta/>
+            </div>
+            <CommentList/>
           </section>
+          <div className="detail-recommend">
+            <aside className="recommend-aside">
+              <h2 class="recommend-aside__h">recommend</h2>
+              <ul className="recommend-aside__list">
+                <li></li>
+              </ul>
+            </aside>
+          </div>
         </div>
       </div>
     );

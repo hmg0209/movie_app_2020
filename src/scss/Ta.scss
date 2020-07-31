@@ -1,0 +1,29 @@
+.ta-box {
+  display: flex;  
+  overflow: hidden;
+}
+
+.ta {
+  width: calc(100% - 160px);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  
+  &__btn {
+    width: 150px;
+    margin-left: 10px;
+    border-radius: 5px;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 120px;
+    border: none;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &__counter {
+    text-align: right;
+  }
+}

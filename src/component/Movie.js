@@ -45,35 +45,37 @@ function Movie({ sortList, isAllLoading }) {
             <div>로딩중이야....</div>
           ) : (
             currentMovie.map((movie, i) => (
-              <Link
-                to={{
-                  pathname: `/movie/${movie.id}`,
-                  data: {
-                    movie,
-                  },
-                }}
-                className="movie"
-                key={i}
-              >
-                <span className="movie__poster">
-                  <img
-                    className="movie__poster-img"
-                    src={movie.large_cover_image}
-                    alt={movie.title + ' 포스터'}
-                  ></img>
-                </span>
+              <div className="movie" key={i}>
+                <Link
+                  to={{
+                    pathname: `/movie/${movie.id}`,
+                    data: {
+                      movie,
+                    },
+                  }}
+                  className="movie__link"
+                >
+                  <span className="movie__poster">
+                    <img
+                      className="movie__poster-img"
+                      src={movie.large_cover_image}
+                      alt={movie.title + ' 포스터'}
+                    ></img>
+                  </span>
+                </Link>
                 <div className="movie__cont">
                   <h2 className="movie__title">{movie.title}</h2>
                   <div className="movie__detail">
                     <span className="movie__year">{movie.year}</span>
                     <div className="movie__utils">
+                      <span className="movie__rating icon--star">
+                        {movie.rating}
+                      </span>
                       <span className="movie__like icon--like"></span>
-                      <span className="movie__watch icon--watch"></span>
-                      <span className="movie__rating icon--star">{movie.rating}</span>
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))
           )}
         </div>

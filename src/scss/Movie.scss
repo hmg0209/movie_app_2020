@@ -7,14 +7,13 @@
 }
 
 .movie {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: inline-block;
+  &__link {
+    display: inline-block;
 
-  &:hover {
-    .movie__poster-img {
-      transform: scale(1.05);
+    &:hover {
+      .movie__poster-img {
+        transform: scale(1.05);
+      }
     }
   }
 
@@ -71,12 +70,6 @@
   &--like {
     &::before {
       content: '♥';
-    }
-  }
-
-  &--watch {
-    &::before {
-      content: '👁‍🗨';
     }
   }
 

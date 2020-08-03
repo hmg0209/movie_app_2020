@@ -55,9 +55,44 @@ function Detail(props) {
           </section>
           <div className="detail-recommend">
             <aside className="recommend-aside">
-              <h2 class="recommend-aside__h">recommend</h2>
+              <h2 className="recommend-aside__h">recommend</h2>
               <ul className="recommend-aside__list">
-                <li></li>
+                <li className="item">
+                  <span className="item__img-box">
+                    <img 
+                    src={movie.medium_cover_image}
+                    alt={`${movie.title} poster`}></img>
+                  </span>
+                  <div className="item__cont">
+                    <span className="item__title">{movie.title}</span>
+                    <span className="item__rating icon--star">{movie.rating}</span>
+                    <span className="item__year">{movie.year}</span>
+                  </div>
+                </li>
+                <li className="item">
+                  <span className="item__img-box">
+                    <img 
+                    src={movie.medium_cover_image}
+                    alt={`${movie.title} poster`}></img>
+                  </span>
+                  <div className="item__cont">
+                    <span className="item__title">{movie.title}</span>
+                    <span className="item__rating icon--star">{movie.rating}</span>
+                    <span className="item__year">{movie.year}</span>
+                  </div>
+                </li>
+                <li className="item">
+                  <span className="item__img-box">
+                    <img 
+                    src={movie.medium_cover_image}
+                    alt={`${movie.title} poster`}></img>
+                  </span>
+                  <div className="item__cont">
+                    <span className="item__title">{movie.title}</span>
+                    <span className="item__rating icon--star">{movie.rating}</span>
+                    <span className="item__year">{movie.year}</span>
+                  </div>
+                </li>
               </ul>
             </aside>
           </div>

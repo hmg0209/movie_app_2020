@@ -1,55 +1,186 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
 
 import '../scss/HeroSlider.scss';
 
 function HeroSlider({ movies }) {
-  let prev = 0;
+  const [prev, setPrev] = useState(3);
+  const [active, setActive] = useState(0);
 
-  const slideChange = (e) => {
+  const slideRefs = useRef([...new Array(4)].map(() => React.createRef()));
+
+  useEffect(() => {
+    const slide = slideRefs.current.map((el) => el.current);
+    const slidePrev = slide[prev];
+    const slideActive = slide[active];
+
+    const prevPoster = slidePrev.querySelector('.hero__poster');
+    const activePoster = slideActive.querySelector('.hero__poster');
+    const activeReveal = slideActive.querySelectorAll('.reveal');
+    const prevReveal = slidePrev.querySelectorAll('.reveal');
+
+    //slide 모션
+    if (slideActive !== slidePrev) {
+      slidePrev.classList.remove('is-active');
+      MoveSlide();
+      setPrev(active);
+    }
+
+    function MoveSlide() {
+      let tl = gsap.timeline({});
+
+      tl
+        .add(initSlide)
+        .to(
+          prevPoster,
+          {
+            duration: 0.45,
+            ease: 'power2.out',
+            x: '-35%',
+            scale: '0.7',
+          },
+          'hide'
+        )
+        .to(
+          prevPoster,
+          {
+            duration: 0.35,
+            opacity: 0.5,
+            ease: 'power2.out',
+            x: '-10%',
+          },
+          'hide+=0.4'
+        )
+        .to(
+          slidePrev.querySelectorAll('.reveal'),
+          0.25,
+          {
+            ease: 'power2.out',
+            opacity: 0,
+            y: -20,
+            stagger: 0.08,
+          },
+          'hide'
+        )
+        .to(
+          slidePrev.querySelector('.hero__bg'),
+          {
+            duration: 0.4,
+            ease: 'power1.in',
+            opacity: 0,
+          },
+          'hide'
+        )
+
+        .to(
+          activePoster,
+          {
+            duration: 0.15,
+            opacity: 1,
+          },
+          'show-=0.35'
+        )
+        .to(
+          activePoster,
+          {
+            ease: 'power1.out',
+            duration: 0.35,
+            x: '0%',
+          },
+          'show-=0.35'
+        )
+        .to(
+          activeReveal,
+          0.25,
+          {
+            ease: 'power2.inout',
+            opacity: 1,
+            y: 0,
+            stagger: 0.08,
+          },
+          'show-=0.2'
+        )
+        .to(
+          slideActive.querySelector('.hero__bg'),
+          {
+            duration: 0.4,
+            ease: 'power1.in',
+            opacity: 0.6,
+          },
+          'showEnd-=0.4'
+        )
+        .set(
+          prevPoster,
+          {
+            opacity: 0,
+          },
+          'ShowEnd'
+        );
+    }
+
+    function initSlide() {
+      let tl = gsap.timeline();
+
+      tl
+        .set(prevPoster, {
+          x: 0,
+          scale: 1,
+          zIndex: 1,
+          opacity: 1,
+        })
+        .set(activePoster, {
+          opacity: 0,
+          x: '60%',
+          scale: 1,
+          zIndex: 5,
+        })
+        .set(activeReveal, {
+          opacity: 0,
+          y: '-20',
+        })
+        .set(prevReveal, {
+          opacity: 1,
+          y: '0',
+        });
+
+      return tl;
+    }
+  }, [active, prev, slideRefs]);
+
+  const updateActive = (e) => {
     const nodes = Array.prototype.slice.call(e.target.parentNode.children);
-    let active = nodes.indexOf(e.target);
 
-    document.querySelectorAll('.hero')[prev].style.opacity = 0;
-    document.querySelectorAll('.hero')[prev].style.visibility = 'hidden';
-
-    document.querySelectorAll('.hero')[active].style.opacity = 1;
-    document.querySelectorAll('.hero')[active].style.visibility = 'visible';
-
-    prev = active;
+    setActive(nodes.indexOf(e.target));
   };
 
   return (
     <section className="hero-section section">
       {movies.map((movie, i) => (
-        <div className="hero" key={i}>
-          <div className="hero__bg">
-            <div
-              className="hero__bg-img"
-              style={{ backgroundImage: `url(${movie.background_image})` }}
-            ></div>
-          </div>
+        <div className="hero" key={i} ref={slideRefs.current[i]}>
+          <div
+            className="hero__bg"
+            style={{ backgroundImage: `url(${movie.background_image})` }}
+          ></div>
           <div className="hero__box l-wrap">
             <div className="hero__cont">
-              <span className="hero__brow">BEST MOVIES</span>
-              <div className="hero__detail">
+              <span className="hero__brow reveal">BEST MOVIES</span>
+              <div className="hero__detail reveal">
                 <span className="hero__rating icon--star">{movie.rating}</span>
                 <dl className="hero__genre list-box">
                   <dt className="a11y">genre</dt>
-                {movie.genres.map((genre, i) => (
-                  <dd className="list-box__item" key={i}>{`${genre}`}</dd>
-                ))}
+                  {movie.genres.map((genre, i) => (
+                    <dd className="list-box__item" key={i}>{`${genre}`}</dd>
+                  ))}
                 </dl>
               </div>
-              <h3 className="hero__title">{movie.title}</h3>
-              <p className="hero__summary">{
-                movie.summary.length > 300 ? (
-                  `${movie.summary.substring(0,300)}...`
-                ) : (
-                  movie.summary
-                )
-              }</p>
-              <div className="func">
+              <h3 className="hero__title reveal">{movie.title}</h3>
+              <p className="hero__summary reveal">
+                {movie.summary.length > 300
+                  ? `${movie.summary.substring(0, 300)}...`
+                  : movie.summary}
+              </p>
+              <div className="func reveal">
                 <Link
                   to={{
                     pathname: `/movie/${movie.id}`,
@@ -79,7 +210,11 @@ function HeroSlider({ movies }) {
       <div className="hero__controller">
         <ul className="hero__pagination">
           {movies.map((movie, i) => (
-            <li className="hero__pagination-item" key={i} onClick={slideChange}>
+            <li
+              className="hero__pagination-item"
+              key={i}
+              onClick={updateActive}
+            >
               <span className="a11y">{`${i}번 슬라이드로 이동`}</span>
             </li>
           ))}

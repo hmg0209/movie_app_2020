@@ -25,7 +25,7 @@ function Home() {
         data: { movies: rating },
       },
     } = await axios.get(
-      'https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=50'
+      'https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=42'
     );
 
     await setHeroMovies(heroMovies);
@@ -40,7 +40,7 @@ function Home() {
         data: { movies: title },
       },
     } = await axios.get(
-      'https://yts.mx/api/v2/list_movies.json?sort_by=title&limit=40'
+      'https://yts.mx/api/v2/list_movies.json?sort_by=title&limit=42'
     );
 
     const {
@@ -48,7 +48,7 @@ function Home() {
         data: { movies: year },
       },
     } = await axios.get(
-      'https://yts.mx/api/v2/list_movies.json?sort_by=year&limit=35'
+      'https://yts.mx/api/v2/list_movies.json?sort_by=year&limit=42'
     );
 
     const {
@@ -56,7 +56,7 @@ function Home() {
         data: { movies: like },
       },
     } = await axios.get(
-      'https://yts.mx/api/v2/list_movies.json?sort_by=like_count&limit=48'
+      'https://yts.mx/api/v2/list_movies.json?sort_by=like_count&limit=42'
     );
 
     await setSortList((arr) => {
@@ -67,7 +67,6 @@ function Home() {
 
   useEffect(() => {
     getMovies();
-    console.log('aaa');
   }, []);
 
   return (

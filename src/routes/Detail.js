@@ -14,8 +14,7 @@ function Detail(props) {
 
   if (location.data) {
     const { movie } = location.data;
-    console.log(movie);
-
+    
     return (
       <div className="detail">
         <section

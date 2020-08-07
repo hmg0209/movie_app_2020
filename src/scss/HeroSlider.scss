@@ -1,7 +1,7 @@
 .hero-section {
   position: relative;
-  width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 .hero {
@@ -13,12 +13,9 @@
   right: 0;
   bottom: 0;
   overflow-x: hidden;
-  opacity: 0;
-  visibility: hidden;
 
-  &:nth-child(1) {
-    opacity: 1;
-    visibility: visible;
+  &.is-active {
+    z-index: 10;
   }
 
   .func {
@@ -31,53 +28,46 @@
 
   &__bg {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    right: 0;
     z-index: -1;
+    width: 60vw;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    filter: grayscale(70%);
 
-    &-img {
-      width: 60vw;
-      height: 100%;
-      margin-left: auto;
-      background-size: cover;
-      background-position: center;
-      opacity: 0.7;
-      filter: grayscale(70%);
-      mix-blend-mode: screen;
+    &::before,
+    &::after {
+      position: absolute;
+      z-index: 100;
+      content: '';
+    }
 
-      &::before,
-      &::after {
-        position: absolute;
-        z-index: 0;
-        mix-blend-mode: unset;
-        content: '';
-      }
+    &::before {
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 20vh;
+      background: linear-gradient(
+        180deg,
+        rgba(11, 11, 24, 0) 0%,
+        rgba(11, 11, 24, 0.4) 60%,
+        rgba(11, 11, 24, 1) 100%
+      );
+    }
 
-      &::before {
-        left: 0;
-        bottom: 0;
-        width: 100vw;
-        height: 20vh;
-        background: linear-gradient(
-          180deg,
-          rgba(11, 11, 24, 0) 0%,
-          rgba(11, 11, 24, 0.4) 60%,
-          rgba(11, 11, 24, 1) 100%
-        );
-      }
-
-      &:after {
-        top: 0;
-        left: 0;
-        width: 20vw;
-        height: 100vh;
-        background: linear-gradient(
-          270deg,
-          rgba(11, 11, 24, 0) 0%,
-          rgba(11, 11, 24, 0.4) 60%,
-          rgba(11, 11, 24, 1) 100%
-        );
-      }
+    &:after {
+      top: 0;
+      left: 0;
+      width: 20vw;
+      height: 100vh;
+      background: linear-gradient(
+        270deg,
+        rgba(11, 11, 24, 0) 0%,
+        rgba(11, 11, 24, 0.4) 60%,
+        rgba(11, 11, 24, 1) 100%
+      );
     }
   }
 
@@ -91,14 +81,34 @@
   &__cont {
     width: 30%;
     padding-right: 18%;
+    .btn {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .is-active & {
+      .btn {
+        cursor: pointer;
+        pointer-events: auto;
+      }
+    }
   }
 
   &__poster {
+    position: relative;
     max-width: 400px;
     mix-blend-mode: unset;
+    opacity: 0;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .is-active & {
+      opacity: 1;
+    }
   }
 
   &__brow {
+    display: block;
     letter-spacing: 0.25em;
   }
 
@@ -117,7 +127,6 @@
     font-size: 14px;
   }
 
-
   &__title {
     // margin: 40px 0 20px;
     margin: 0 0 30px;
@@ -134,6 +143,7 @@
   &__pagination {
     position: absolute;
     top: 50%;
+    z-index: 20;
     transform: translateY(-50%);
 
     &-item {

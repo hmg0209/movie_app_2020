@@ -8,12 +8,12 @@ function HeroSlider({ movies }) {
   const [prev, setPrev] = useState(3);
   const [active, setActive] = useState(0);
 
-  const slideRefs = useRef([...new Array(4)].map(() => React.createRef()));
+  const slideRefs = useRef([...new Array(movies.length)].map(() => React.createRef()));
 
   useEffect(() => {
-    const slide = slideRefs.current.map((el) => el.current);
-    const slidePrev = slide[prev];
-    const slideActive = slide[active];
+    const slides = slideRefs.current.map((el) => el.current);
+    const slidePrev = slides[prev];
+    const slideActive = slides[active];
 
     const prevPoster = slidePrev.querySelector('.hero__poster');
     const activePoster = slideActive.querySelector('.hero__poster');
@@ -22,7 +22,11 @@ function HeroSlider({ movies }) {
 
     //slide 모션
     if (slideActive !== slidePrev) {
-      slidePrev.classList.remove('is-active');
+      for (let slide of slides) {
+        slide.classList.remove('is-active');
+      }
+
+      slideActive.classList.add('is-active');
       MoveSlide();
       setPrev(active);
     }

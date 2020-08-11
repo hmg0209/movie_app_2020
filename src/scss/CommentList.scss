@@ -1,14 +1,19 @@
-.comment-list {
-
-}
-
 .comment {
-  // position: relative;
-  // padding-left: 35px;
-  
+  position: relative;
+  padding: 32px 40px 24px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
 
   & + & {
-    margin-top: 20px;
+    margin-top: 32px;
+  }
+
+  &__btn {
+    position: absolute;
+    top: 22px;
+    right: 30px;
+    padding: 10px;
+    font-size: 12px;
   }
 
   &__header {
@@ -34,15 +39,5 @@
   &__date {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.45);
-  }
-
-  &__box {
-    padding: 32px 40px 24px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-  }
-
-  &__p {
-    // margin: 0;
   }
 }

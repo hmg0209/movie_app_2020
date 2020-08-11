@@ -48,7 +48,7 @@ function Detail(props) {
         <div className="detail-content l-wrap"> 
           <section className="detail-comment">
             <div className="detail-comment__ta">
-              <Ta/>
+              <Ta id={ movie.id }/>
             </div>
             <CommentList id={ movie.id }/>
           </section>

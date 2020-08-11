@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { dataBase, auth } from '../firebase/utils';
 
 import '../scss/Ta.scss';
 
-function Ta() {
+function Ta({ id }) {
   const CHAR_LIMIT = 300;
   const [charNum, setCharNum] = useState(0);
+  const commentsData = dataBase.ref(`comments/${id}`);
 
   function countChar(e) {
     if (charNum < CHAR_LIMIT) {
@@ -15,7 +17,22 @@ function Ta() {
     setCharNum(e.target.value.length);
   }
 
-  function addComment() {}
+  function addComment(e) {
+    const ta = e.target.parentElement.querySelector('.ta__input');
+    const user = auth.currentUser;
+    const date = new Date();
+    console.log(date);
+
+    commentsData.push().set({
+      date: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`,
+      text : ta.value,
+      userName: user.displayName,
+      email: user.email,
+    });
+
+    ta.value = '';
+    setCharNum(0);
+  }
 
   return (
     <div className="ta-box">
@@ -26,7 +43,7 @@ function Ta() {
           <span className="ta-conter__total">{ CHAR_LIMIT }</span>
         </div>
       </div>
-      <button type="button" className="ta__btn btn--em" onClick={addComment}>
+      <button type="button" className="ta__btn btn--em" onClick={ addComment }>
         comment
       </button>
     </div>

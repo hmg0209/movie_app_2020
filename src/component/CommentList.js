@@ -1,46 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { dataBase } from '../firebase/utils';
+import { dataBase, auth } from '../firebase/utils';
 
 import '../scss/CommentList.scss';
 
 function CommentList({ id }) {
-
   const [comments, setComments] = useState(null);
-  const commentsData = dataBase.ref(`comments/id${id}`);
-
-
+  
   useEffect(() => {
+    const commentsData = dataBase.ref(`comments/${id}`);
     commentsData.on('value', function (snapshot) {
       setComments(snapshot.val());
     });
   }, []);
 
+  function deleteComment(e, commentId) {
+    const commentsData = dataBase.ref(`comments/${id}/${commentId}`);
+    //console.log(e, commentsData);
+    commentsData.remove();
+  }
+
   return (
     <ul className="comment-list">
       {comments === null ? (
-        <li>로딩중</li>
+        <li>Please add comments.</li>
       ) : (
-        Object.values(comments).map((comment, i) => (
-          <li className="comment" key={i}>
-            <div className="comment__box">
+          Object.entries(comments).map((comment, i) => (
+            <li className="comment" key={i}>
+              {
+                ( auth.currentUser.email === comment[1].email ) && (
+                  <button type="button" 
+                  className="comment__btn" 
+                  onClick={(e) => deleteComment(e, comment[0])}>Delete</button>)
+              }
               <div className="comment__header">
                 <span className="comment__img">
-                  { comment.userName.substring(0, 1) }
+                  {comment[1].userName.substring(0, 1)}
                 </span>
                 <div>
-                  <span className="comment__name">{ comment.userName }</span>
-                  <span className="comment__date">{ comment.date }</span>
+                  <span className="comment__name">{comment[1].userName}</span>
+                  <span className="comment__date">{comment[1].date}</span>
                 </div>
               </div>
-              <p className="comment__p">{ comment.text }</p>
-              <div className="comment__utils">
-                <span>추천: { comment.like === undefined ?
-                  0 : (comment.like) }</span>
-              </div>
-            </div>
-          </li>
-        ))
-      )}
+              <p className="comment__p">{comment[1].text}</p>
+            </li>
+          ))
+        )}
     </ul>
   );
 }

@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import '../scss/HeroSlider.scss';
 
 function HeroSlider({ movies }) {
-  const [prev, setPrev] = useState(3);
+  const [prev, setPrev] = useState(movies.length-1);
   const [active, setActive] = useState(0);
 
   const slideRefs = useRef([...new Array(movies.length)].map(() => React.createRef()));

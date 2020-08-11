@@ -15,6 +15,8 @@ function Ta() {
     setCharNum(e.target.value.length);
   }
 
+  function addComment() {}
+
   return (
     <div className="ta-box">
       <div className="ta">
@@ -24,7 +26,7 @@ function Ta() {
           <span className="ta-conter__total">{ CHAR_LIMIT }</span>
         </div>
       </div>
-      <button type="button" className="ta__btn btn--em">
+      <button type="button" className="ta__btn btn--em" onClick={addComment}>
         comment
       </button>
     </div>

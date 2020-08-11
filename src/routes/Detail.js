@@ -50,7 +50,7 @@ function Detail(props) {
             <div className="detail-comment__ta">
               <Ta/>
             </div>
-            <CommentList/>
+            <CommentList id={ movie.id }/>
           </section>
           <div className="detail-recommend">
             <aside className="recommend-aside">

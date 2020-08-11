@@ -24,6 +24,16 @@
     margin-right: 16px;
     border-radius: 5px;
     background-color: palevioletred;
+    text-transform: uppercase;
+  }
+
+  &__name {
+    display: block;
+  }
+
+  &__date {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.45);
   }
 
   &__box {

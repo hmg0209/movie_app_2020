@@ -45,12 +45,48 @@
   }
 
   &__data {
-    width: 50%;
-    max-width: 550px;
+    width: 70%;
+    max-width: 760px;
   }
 
   &__title {
     font-size: 29px;
+    margin-bottom: 15px;
+  }
+
+  &__year, 
+  &__time {
+    position: relative;
+    display: inline-block;
+    margin:  5px 0 24px 20px;
+    padding-left: 24px;
+
+    &::before {
+      position: absolute;
+      top: 4px;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 16px;
+      height: 16px;
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 10px;
+      font-weight: bold;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+  }
+
+  &__year {
+    &::before {
+      content: 'Y';
+    }
+  }
+
+  &__time {
+    &::before {
+      content: 'T';
+    }
   }
 
   &__description-box {

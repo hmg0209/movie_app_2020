@@ -8,18 +8,9 @@ function Home() {
 
   const [isFirstLoading, setFirstLoading] = useState(true);
   const [isAllLoading, setAllLoading] = useState(true);
-  const [heroMovies, setHeroMovies] = useState([]);
   const [sortList, setSortList] = useState([]);
 
   const getMovies = async () => {
-    const {
-      data: {
-        data: { movies: heroMovies },
-      },
-    } = await axios.get(
-      'https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=6'
-    );
-
     const {
       data: {
         data: { movies: rating },
@@ -28,7 +19,6 @@ function Home() {
       'https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=42'
     );
 
-    await setHeroMovies(heroMovies);
     await setSortList((arr) => {
       return {...arr, rating};
     });
@@ -77,7 +67,7 @@ function Home() {
         </div>
       ) : (
         <div className="container">
-          <HeroSlider movies={heroMovies} />
+          <HeroSlider movies={sortList.rating} />
           <Movie sortList={sortList} isAllLoading={isAllLoading}/>
         </div>
       )}

@@ -30,15 +30,18 @@ function Detail(props) {
             </span>
             <div className="detail__data">
               <h1 className="detail__title">{movie.title}</h1>
-              <dl className="list-box">
+                <dl className="list-box">
                 <dt className="a11y">genre</dt>
                 {movie.genres.map((genre, i) => (
                   <dd className="list-box__item" key={i}>{`${genre}`}</dd>
                 ))}
               </dl>
               <span className="icon--star">{movie.rating}</span>
-              <span>{movie.year}</span>
-              <span>{movie.runtime}</span>
+              <span className="detail__year">{movie.year}</span>
+              <span className="detail__time">
+                {`${Math.floor(movie.runtime / 60)}h
+                ${movie.runtime - (Math.floor(movie.runtime / 60) * 60)}m`}
+              </span>
               <div className="detail__description-box">
                 <p className="detail__description">{movie.description_full}</p>
               </div>

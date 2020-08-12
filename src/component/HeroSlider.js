@@ -5,6 +5,9 @@ import gsap from 'gsap';
 import '../scss/HeroSlider.scss';
 
 function HeroSlider({ movies }) {
+  const HERO_LENGTH = 5;
+  movies = movies.slice(0, HERO_LENGTH);
+
   const [prev, setPrev] = useState(movies.length-1);
   const [active, setActive] = useState(0);
 

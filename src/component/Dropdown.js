@@ -30,16 +30,15 @@ function Dropdown({sort}) {
       <button
         type="button"
         className="dropdown__selected"
-        onClick={() => toggelDropdown(!isOpened)}
-      >
+        onClick={() => toggelDropdown(!isOpened)}>
         rating
       </button>
       <div className="dropdown__options">
         <button 
           type="button"
           value="rating"
-          onClick={(e) => selectOption(e)} 
-          className="dropdown__option">
+          className="dropdown__option"
+          onClick={(e) => selectOption(e)}>
           rating
         </button>
         <button 

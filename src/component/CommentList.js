@@ -11,11 +11,11 @@ function CommentList({ id }) {
     commentsData.on('value', function (snapshot) {
       setComments(snapshot.val());
     });
-  }, []);
+  }, [id]);
 
+  console.log(comments);
   function deleteComment(e, commentId) {
     const commentsData = dataBase.ref(`comments/${id}/${commentId}`);
-    //console.log(e, commentsData);
     commentsData.remove();
   }
 

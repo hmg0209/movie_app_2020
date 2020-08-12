@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { dataBase, auth } from '../firebase/utils';
 
 import '../scss/Ta.scss';
 
 function Ta({ id }) {
   const CHAR_LIMIT = 300;
-  const [charNum, setCharNum] = useState(0);
+  const [char, setChar] = useState('');
   const commentsData = dataBase.ref(`comments/${id}`);
 
-  function countChar(e) {
-    if (charNum < CHAR_LIMIT) {
-      return setCharNum(e.target.value.length);
+  useEffect(() => {
+    console.log(char, char.length, CHAR_LIMIT);
+    if (char.length > CHAR_LIMIT) {
+      setChar(char.substring(0, CHAR_LIMIT));
     }
+  }, [char]);
 
-    e.target.value = e.target.value.substring(0, CHAR_LIMIT);
-    setCharNum(e.target.value.length);
+  function countChar(e) {
+    setChar(e.target.value);
   }
 
   function addComment(e) {
@@ -30,16 +32,18 @@ function Ta({ id }) {
       email: user.email,
     });
 
-    ta.value = '';
-    setCharNum(0);
+    setChar('');
   }
 
   return (
     <div className="ta-box">
       <div className="ta">
-        <textarea className="ta__input" onChange={ countChar }></textarea>
+        <textarea 
+          className="ta__input" 
+          value={ char } 
+          onChange={ countChar }></textarea>
         <div className="ta__counter">
-          <span className="ta-conter__current">{ charNum }</span> / 
+          <span className="ta-conter__current">{ char.length }</span> / 
           <span className="ta-conter__total">{ CHAR_LIMIT }</span>
         </div>
       </div>

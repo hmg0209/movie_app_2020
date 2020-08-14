@@ -9,7 +9,6 @@ function Ta({ id }) {
   const commentsData = dataBase.ref(`comments/${id}`);
 
   useEffect(() => {
-    console.log(char, char.length, CHAR_LIMIT);
     if (char.length > CHAR_LIMIT) {
       setChar(char.substring(0, CHAR_LIMIT));
     }
@@ -23,7 +22,6 @@ function Ta({ id }) {
     const ta = e.target.parentElement.querySelector('.ta__input');
     const user = auth.currentUser;
     const date = new Date();
-    console.log(date);
 
     commentsData.push().set({
       date: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`,

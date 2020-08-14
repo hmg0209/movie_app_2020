@@ -5,6 +5,8 @@ import '../scss/CommentList.scss';
 
 function CommentList({ id }) {
   const [comments, setComments] = useState(null);
+
+  // console.log(comments);
   
   useEffect(() => {
     const commentsData = dataBase.ref(`comments/${id}`);
@@ -13,7 +15,6 @@ function CommentList({ id }) {
     });
   }, [id]);
 
-  console.log(comments);
   function deleteComment(e, commentId) {
     const commentsData = dataBase.ref(`comments/${id}/${commentId}`);
     commentsData.remove();

@@ -8,10 +8,12 @@ function HeroSlider({ movies }) {
   const HERO_LENGTH = 5;
   movies = movies.slice(0, HERO_LENGTH);
 
-  const [prev, setPrev] = useState(movies.length-1);
+  const [prev, setPrev] = useState(movies.length - 1);
   const [active, setActive] = useState(0);
 
-  const slideRefs = useRef([...new Array(movies.length)].map(() => React.createRef()));
+  const slideRefs = useRef(
+    [...new Array(movies.length)].map(() => React.createRef())
+  );
 
   useEffect(() => {
     const slides = slideRefs.current.map((el) => el.current);
@@ -24,21 +26,21 @@ function HeroSlider({ movies }) {
     const prevReveal = slidePrev.querySelectorAll('.reveal');
 
     //slide 모션
-    if (slideActive !== slidePrev) {
+    setActive(active);
+
+    if (prev !== active) {
       for (let slide of slides) {
         slide.classList.remove('is-active');
       }
 
       slideActive.classList.add('is-active');
       MoveSlide();
-      setPrev(active);
     }
 
     function MoveSlide() {
       let tl = gsap.timeline({});
 
-      tl
-        .add(initSlide)
+      tl.add(initSlide)
         .to(
           prevPoster,
           {
@@ -130,12 +132,6 @@ function HeroSlider({ movies }) {
       let tl = gsap.timeline();
 
       tl
-        .set(prevPoster, {
-          x: 0,
-          scale: 1,
-          zIndex: 1,
-          opacity: 1,
-        })
         .set(activePoster, {
           opacity: 0,
           x: '60%',
@@ -153,11 +149,12 @@ function HeroSlider({ movies }) {
 
       return tl;
     }
-  }, [active, prev, slideRefs]);
+  }, [active, prev]);
 
   const updateActive = (e) => {
     const nodes = Array.prototype.slice.call(e.target.parentNode.children);
 
+    setPrev(active);
     setActive(nodes.indexOf(e.target));
   };
 
@@ -189,12 +186,7 @@ function HeroSlider({ movies }) {
               </p>
               <div className="func reveal">
                 <Link
-                  to={{
-                    pathname: `/movie/${movie.id}`,
-                    data: {
-                      movie,
-                    },
-                  }}
+                  to={{ pathname: `/movie/${movie.id}` }}
                   className="btn btn--em"
                 >
                   Go Detail

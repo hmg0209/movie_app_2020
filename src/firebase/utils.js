@@ -1,7 +1,5 @@
-// firebase.utils.js 파일 새롭게 생성하기
 import firebase from 'firebase/app';
 import firebaseConfig from './firebase.config';
-import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/database';
 

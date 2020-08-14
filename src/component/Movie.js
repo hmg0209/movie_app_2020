@@ -86,12 +86,7 @@ function Movie({ sortList, isAllLoading }) {
             currentMovie.map((movie, i) => (
               <div className="movie" key={i}>
                 <Link
-                  to={{
-                    pathname: `/movie/${movie.id}`,
-                    data: {
-                      movie,
-                    },
-                  }}
+                  to={{ pathname: `/movie/${movie.id}` }}
                   className="movie__link"
                 >
                   <span className="movie__poster">

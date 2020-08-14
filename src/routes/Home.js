@@ -5,7 +5,6 @@ import HeroSlider from '../component/HeroSlider';
 import '../scss/Home.scss';
 
 function Home() {
-
   const [isFirstLoading, setFirstLoading] = useState(true);
   const [isAllLoading, setAllLoading] = useState(true);
   const [sortList, setSortList] = useState([]);
